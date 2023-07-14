@@ -1,0 +1,27 @@
+#
+# Created by GuHaijun on 2023/7/13.
+#
+
+LIBYUV_MODULE_USER_LOCAL_PATH:=$(LOCAL_PATH)
+
+LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+
+# LIBYUV_LIB_TYPE := STATIC
+ifeq ($(LIBYUV_LIB_TYPE),)
+    LIBYUV_LIB_TYPE := SHARED
+endif
+
+$(warning LIBYUV_LIB_TYPE: $(LIBYUV_LIB_TYPE))
+
+LIBYUV_LOCAL_STATIC_LIBRARIES :=
+LIBYUV_LOCAL_SHARED_LIBRARIES :=
+
+ifeq ($(filter $(modules-get-list), yuv, yuv_static),)
+    include $(LOCAL_PATH)/libyuv.mk
+endif
+
+LIBYUV_LOCAL_C_INCLUDES := $(LOCAL_C_INCLUDES)
+LIBYUV_LOCAL_EXPORT_C_INCLUDES := $(LIBYUV_LOCAL_C_INCLUDES)
+
+LOCAL_PATH:=$(LIBYUV_MODULE_USER_LOCAL_PATH)
